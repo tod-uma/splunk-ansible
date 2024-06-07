@@ -115,18 +115,17 @@
   when: "'conf' in splunk and splunk.conf"
   no_log: "{{ hide_password }}"
 
-# Generate outputs.conf before splunk starts to prevent data being indexed locally
+- include_tasks: enable_dsp.yml
+  when: "'dsp' in splunk and 'enable' in splunk.dsp and splunk.dsp.enable"
+
+- include_tasks: start_splunk.yml
+
 - include_tasks: enable_forwarding.yml
   when:
     # Indexers should never forward 
     - splunk.role != "splunk_indexer"
     - (splunk.role != "splunk_standalone" and splunk.role != "splunk_search_head") or
         (splunk_indexer_cluster | bool or splunk_forward_servers is defined)
-
-- include_tasks: enable_dsp.yml
-  when: "'dsp' in splunk and 'enable' in splunk.dsp and splunk.dsp.enable"
-
-- include_tasks: start_splunk.yml
 
 - include_tasks: set_certificate_prefix.yml
   when: not uds_enabled | bool
