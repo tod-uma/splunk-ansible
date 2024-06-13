@@ -1,5 +1,7 @@
 ---
 - include_tasks: ../../../roles/splunk_common/tasks/set_as_hec_receiver.yml
+  when:
+    - "'hec' in splunk"
 
 - include_tasks: ../../../roles/splunk_common/tasks/set_as_deployment_client.yml
   when:
