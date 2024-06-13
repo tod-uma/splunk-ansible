@@ -9,7 +9,6 @@
     uds_enabled: True
   when:
     - socket_file.stat.exists
-    - socket_file.stat.size > 0
 
 - name: Mark UDS disabled
   set_fact:
