@@ -5,12 +5,13 @@ import os
 import requests
 import requests_unixsocket
 import json
+import urllib.parse
 
 UDS_SOCKET_PATH = "/opt/splunkforwarder/var/run/splunk/cli.socket"
 UDS_SOCKET_PATH_URL = "%2Fopt%2Fsplunkforwarder%2Fvar%2Frun%2Fsplunk%2Fcli.socket"
 
-def supports_uds():
-    return os.path.exists(UDS_SOCKET_PATH)
+def supports_uds(uds_socket_path):
+    return os.path.exists(uds_socket_path)
 
 def api_call_tcp(cert_prefix, method, endpoint, username, password, svc_port, payload=None, headers=None, verify=False, status_code=None, timeout=None, body_format=None):
     if not cert_prefix or cert_prefix not in ['http', 'https']:
@@ -47,8 +48,8 @@ def api_call_tcp(cert_prefix, method, endpoint, username, password, svc_port, pa
       cwd = os.getcwd()
     return response, excep_str
 
-def api_call_uds(method, endpoint, username, password, svc_port, payload=None, headers=None, verify=False, status_code=None, timeout=None, body_format=None):
-    url = "http+unix://{}{}".format(UDS_SOCKET_PATH_URL,endpoint)
+def api_call_uds(method, endpoint, username, password, svc_port, uds_socket_path, payload=None, headers=None, verify=False, status_code=None, timeout=None, body_format=None):
+    url = "http+unix://{}{}".format(urllib.parse.quote(uds_socket_path),endpoint)
     if headers is None:
         headers = {}
     headers['Content-Type'] = 'application/json'
@@ -93,6 +94,7 @@ def main():
         status_code=dict(type='list', required=False),
         timeout=dict(type='int', required=False),
         svc_port=dict(type='int', required=False)
+        splunk_home=dict(type='str', required=False, default='/opt/splunkforwarder')
     )
 
     module = AnsibleModule(
@@ -117,6 +119,7 @@ def main():
     svc_port = module.params.get('svc_port', 8089)
     return_content = module.params.get('return_content', False)
     use_proxy = module.params.get('use_proxy', "no")
+    uds_socket_path = module.params.get('splunk_home') + "/var/run/splunk/cli.socket"
 
     if status_code:
       status_code = [int(x) for x in status_code]
@@ -126,8 +129,8 @@ def main():
       return_content = False
 
     s = "{}{}{}{}{}{}{}{}{}".format(method, endpoint, username, password, svc_port, payload, headers, verify, status_code, timeout)
-    if supports_uds():
-        response, excep_str = api_call_uds(method, endpoint, username, password, svc_port, payload, headers, verify, status_code, timeout, body_format)
+    if supports_uds(uds_socket_path):
+        response, excep_str = api_call_uds(method, endpoint, username, password, svc_port, payload, uds_socket_path, headers, verify, status_code, timeout, body_format)
     else:
         response, excep_str = api_call_tcp(cert_prefix, method, endpoint, username, password, svc_port, payload, headers, verify, status_code, timeout, body_format)
 
