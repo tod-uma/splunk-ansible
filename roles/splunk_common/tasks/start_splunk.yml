@@ -50,10 +50,6 @@
       - splunk.enable_service
       - ansible_os_family == "Windows"
 
-- name: Pause for splunk to start
-  ansible.builtin.pause:
-    seconds: 10
-
 - include_tasks: check_uds_file.yml
 
 - name: "Wait for splunkd management port"
