@@ -7,6 +7,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     status_code: '200,404'
     timeout: 10
   register: check_fwd_lic
@@ -21,6 +22,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       is_active: 1
     body_format: "form-urlencoded"

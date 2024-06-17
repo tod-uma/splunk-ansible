@@ -7,6 +7,7 @@
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       disabled: "false"
       port: "{{ splunk.dfs.port }}"
@@ -21,6 +22,7 @@
     method: POST
     cert_prefix: "{{ cert_prefix }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       dfc_num_slots: "{{ splunk.dfs.dfc_num_slots }}"
       dfw_num_slots: "{{ splunk.dfs.dfw_num_slots }}"
@@ -41,6 +43,7 @@
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       phased_execution: "true"
       max_searches_per_process: "1"
@@ -57,6 +60,7 @@
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
   register: check_dfs_job_extractor_result
   failed_when: False
   changed_when: False
@@ -69,6 +73,7 @@
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       name: "search_optimization::dfs_job_extractor"
       enabled: "true"
@@ -88,6 +93,7 @@
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       enabled: "true"
       commands: "stats,join,sort,head,tail,reverse,dedup,rename,fields,union,from,eval"

@@ -27,6 +27,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       deployer_push_mode: "{{ splunk.shc.deployer_push_mode }}"
     body_format: "form-urlencoded"

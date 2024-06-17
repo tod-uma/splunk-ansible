@@ -17,6 +17,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body: "{{ item }}"
     body_format: "form-urlencoded"
     status_code: "201,409"
@@ -40,6 +41,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body: "{{ item }}"
     body_format: "form-urlencoded"
     status_code: "201,409"
@@ -63,6 +65,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       member: {{ item.name }}
       default: false
@@ -83,6 +86,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       member: {{ item.name }}
       default: false

@@ -11,6 +11,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     timeout: 10
     cert_prefix: "{{ cert_prefix }}"
   register: ess_info

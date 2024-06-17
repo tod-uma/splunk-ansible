@@ -23,6 +23,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       preferred_captain: "{{ splunk_search_head_captain | bool | lower }}"
     body_format: "form-urlencoded"

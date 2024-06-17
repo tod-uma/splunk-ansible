@@ -7,6 +7,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     status_code: [200]
     timeout: 10
     return_content: yes
@@ -21,6 +22,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body: "{{ item.body }}"
     body_format: "form-urlencoded"
     status_code: 200,201,409

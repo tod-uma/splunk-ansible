@@ -9,6 +9,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       disabled: "{% if ('hec' in splunk and 'enable' in splunk.hec and splunk.hec.enable | bool) or ('hec_disabled' in splunk and not splunk.hec_disabled | bool) %}0{% else %}1{% endif %}"
       enableSSL: "{% if ('hec' in splunk and 'ssl' in splunk.hec and splunk.hec.ssl | bool) or ('hec_enableSSL' in splunk and splunk.hec_enableSSL | bool) %}1{% else %}0{% endif %}"
@@ -27,6 +28,7 @@
     password: "{{ splunk.password }}"
     status_code: [200, 404]
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
   register: hec_token
   when: ('hec' in splunk and 'token' in splunk.hec) or ('hec_token' in splunk)
 
@@ -44,6 +46,7 @@
     password: "{{ splunk.password }}"
     status_code: [200, 404]
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     timeout: 60
     use_proxy: no
   register: delete_hec_token
@@ -62,6 +65,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       name: "splunk_hec_token"
       token: "{% if 'hec' in splunk and 'token' in splunk.hec and splunk.hec.token %}{{ splunk.hec.token }}{% else %}{{ splunk.hec_token }}{% endif %}"

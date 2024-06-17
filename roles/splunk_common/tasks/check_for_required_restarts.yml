@@ -7,6 +7,7 @@
     password: "{{ splunk.password }}"
     status_code: [200, 404]
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     cert_prefix: "{{ cert_prefix }}"
   register: restart_required
   changed_when: restart_required.status == 200

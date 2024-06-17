@@ -11,6 +11,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body_format: "form-urlencoded"
     status_code: [200,201]
     timeout: 10
@@ -26,6 +27,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       search: "{{ dmc_forwarder_build_assets.content['entry'][0]['content']['search'] }}"
       request.ui_dispatch_app: splunk_monitoring_console
@@ -45,6 +47,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body_format: "form-urlencoded"
     status_code: [200, 201]
     timeout: 10

@@ -6,6 +6,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body: 
       name: "itsi_admin"
       imported_roles: ["itoa_user", "itoa_analyst", "itoa_admin"]
@@ -28,6 +29,7 @@
     username: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
     svc_port: "{{ splunk.svc_port }}"
+    splunk_home: "{{ splunk.home }}"
     body:
       roles: ["itsi_admin", "admin"]
     body_format: "form-urlencoded"
