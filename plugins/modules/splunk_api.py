@@ -93,7 +93,7 @@ def main():
         use_proxy=dict(type='str', required=False),
         status_code=dict(type='list', required=False),
         timeout=dict(type='int', required=False),
-        svc_port=dict(type='int', required=False)
+        svc_port=dict(type='int', required=False),
         splunk_home=dict(type='str', required=False, default='/opt/splunkforwarder')
     )
 
