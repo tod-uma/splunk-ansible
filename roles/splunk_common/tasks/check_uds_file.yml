@@ -1,4 +1,8 @@
 ---
+- name: Pause for splunk to start
+  ansible.builtin.pause:
+    seconds: 10
+
 - name: Check if UDS file exists
   stat:
     path: "{{ splunk.home }}/var/run/splunk/cli.socket"
