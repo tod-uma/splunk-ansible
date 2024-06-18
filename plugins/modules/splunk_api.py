@@ -49,7 +49,7 @@ def api_call_tcp(cert_prefix, method, endpoint, username, password, svc_port, pa
     return response, excep_str
 
 def api_call_uds(method, endpoint, username, password, svc_port, uds_socket_path, payload=None, headers=None, verify=False, status_code=None, timeout=None, body_format=None):
-    url = "http+unix://{}{}".format(urllib.parse.quote(uds_socket_path),endpoint)
+    url = "http+unix://{}{}".format(urllib.parse.quote_plus(uds_socket_path),endpoint)
     if headers is None:
         headers = {}
     headers['Content-Type'] = 'application/json'
