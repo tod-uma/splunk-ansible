@@ -1,7 +1,8 @@
 ---
 - name: set version fact
   set_fact:
-    installed_splunk_version: "{{ lookup('file', '{{ splunk.home }}/etc/splunk.version') | regex_findall('VERSION=([0-9.]+)') | first }}"
+    # installed_splunk_version: "{{ lookup('file', '{{ splunk.home }}/etc/splunk.version') | regex_findall('VERSION=([0-9.]+)') | first }}"
+    installed_splunk_version: "{{ splunk_current_version }}"
 
 - name: Configure to set Mgmt Mode as auto (Allows UDS)
   ini_file:
