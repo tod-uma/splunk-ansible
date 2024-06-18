@@ -8,7 +8,6 @@
     splunk_search_head_captain: true
   when: ansible_hostname == splunk.search_head_captain_url or
         ansible_fqdn == splunk.search_head_captain_url or
-        splunk.hostname == splunk.search_head_captain_url or
         splunk.role == "splunk_search_head_captain"
 
 - include_tasks: search_head_clustering.yml
