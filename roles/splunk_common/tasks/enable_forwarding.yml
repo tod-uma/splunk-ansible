@@ -74,21 +74,6 @@
     - not splunk_indexer_cluster | bool
     - splunk_forward_servers is defined
 
-- name: Setup default tcpout default when forward_servers defined
-  ini_file:
-    path: "{{ splunk.home }}/etc/system/local/outputs.conf"
-    section: "tcpout"
-    option: "{{ item.key }}"
-    value: "{{ item.value }}"
-    owner: "{{ splunk.user }}"
-    group: "{{ splunk.group }}"
-  with_items:
-    - {key: "defaultGroup", value: "group1"}
-  when:
-    - not splunk_indexer_cluster | bool
-    - splunk_forward_servers is defined
-  register: default_tcpout_group
-
 # Restart only when Splunk is running and when any of the above have changed
 - include_tasks: trigger_restart.yml
   when: indexer_discovery is changed or tcpout_group is changed or default_tcpout_group is changed or index_disabling is changed
