@@ -49,7 +49,7 @@
     - {key: "indexAndForward", value: "false"}
     - {key: "defaultGroup", value: "group1"}
   when:
-    - splunk_indexer_cluster | bool
+    - splunk_indexer_cluster or splunk_forward_servers is defined | bool 
     - item.value | length > 0
   register: default_tcpout_group
 
