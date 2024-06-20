@@ -25,4 +25,4 @@
 
 # Restart only when Splunk is running and when any of the above have changed
 - include_tasks: trigger_restart.yml
-  when: forward_status is changed or enable_ssl_forwarding is changed
+  when: forward_status is changed
