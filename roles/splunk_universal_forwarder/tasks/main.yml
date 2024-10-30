@@ -37,8 +37,5 @@
   notify:
     - Restart the splunkd service
 
-- include_tasks: ../../../roles/splunk_common/tasks/set_as_hec_receiver.yml
-  when: "'hec' in splunk"
-
 - include_tasks: ../../../roles/splunk_common/tasks/check_for_required_restarts.yml
   when: "'hec' in splunk"

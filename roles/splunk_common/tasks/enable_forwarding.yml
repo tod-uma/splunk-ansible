@@ -17,6 +17,8 @@
     - item.value | length > 0
   no_log: "{{ hide_password }}"
   register: indexer_discovery
+  loop_control:
+    label: "{{ item.key }}"
 
 - name: Setup tcpout group for index-clustering
   ini_file:
@@ -63,7 +65,9 @@
     owner: "{{ splunk.user }}"
     group: "{{ splunk.group }}"
   register: index_disabling
-  when: splunk.role != "splunk_license_master"
+  when:
+    - splunk.role != "splunk_license_master"
+    - splunk.role != "splunk_deployment_server"
 
 # set up forward servers set by get_facts
 - name: Add forward_servers
