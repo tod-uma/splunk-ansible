@@ -1,5 +1,6 @@
 ---
 - include_tasks: ../../../roles/splunk_common/tasks/set_as_hec_receiver.yml
+  when: ('hec' in splunk and 'token' in splunk.hec) or ('hec_token' in splunk)
 
 - include_tasks: indexer_clustering.yml
   when: splunk_indexer_cluster | bool
