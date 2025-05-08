@@ -17,12 +17,37 @@
     - not splunk.splunk_http_enabled | bool
     - ansible_system is not match("CYGWIN*|Win32NT")
 
+- name: Disable tcp managment port
+  ini_file:
+    dest: "{{ splunk.home }}/etc/system/local/server.conf"
+    option: "disableDefaultPort"
+    section: "httpServer"
+    value: "true"
+    owner: "{{ splunk.user }}"
+    group: "{{ splunk.group }}"
+  when:
+    - splunk.role == "splunk_universal_forwarder"
+    - not splunk.splunk_http_enabled | bool
+    - ansible_system is not match("CYGWIN*|Win32NT")
+
 - name: Configure to set Mgmt Mode as tcp (Allows only TCP)
   ini_file:
     dest: "{{ splunk.home }}/etc/system/local/server.conf"
     option: "mgmtMode"
     section: "httpServer"
     value: "tcp"
+    owner: "{{ splunk.user }}"
+    group: "{{ splunk.group }}"
+  when:
+    - splunk.role == "splunk_universal_forwarder"
+    - splunk.splunk_http_enabled | bool or ansible_system is match("CYGWIN*|Win32NT")
+
+- name: Enable tcp managment port
+  ini_file:
+    dest: "{{ splunk.home }}/etc/system/local/server.conf"
+    option: "disableDefaultPort"
+    section: "httpServer"
+    value: "false"
     owner: "{{ splunk.user }}"
     group: "{{ splunk.group }}"
   when:
