@@ -125,6 +125,8 @@ def getDefaultVars():
     getSplunkdSSL(defaultVars)
     getDistributedTopology(defaultVars)
     getLicenses(defaultVars)
+    # Determine if Skip CM Bundle Push Enabled
+    defaultVars["splunk"]["skip_cluster_bundle_push"] = os.environ.get('SPLUNK_SKIP_CLUSTER_BUNDLE_PUSH', '').lower() == 'true'
     # Determine DMC settings
     defaultVars["dmc_forwarder_monitoring"] = os.environ.get('DMC_FORWARDER_MONITORING', False)
     defaultVars["dmc_asset_interval"] = os.environ.get('DMC_ASSET_INTERVAL', '3,18,33,48 * * * *')
@@ -139,8 +141,9 @@ def getDefaultVars():
     defaultVars["splunk"]["preferred_captaincy"] = True
     if os.environ.get("SPLUNK_PREFERRED_CAPTAINCY", "").lower() == "false":
         defaultVars["splunk"]["preferred_captaincy"] = False
-    defaultVars["splunk"]["hostname"] = os.environ.get('SPLUNK_HOSTNAME', socket.getfqdn())
+    defaultVars["splunk"]["hostname"] = os.environ.get('SPLUNK_HOSTNAME', socket.getfqdn())    
 
+    getServiceName(defaultVars)
     getJava(defaultVars)
     getSplunkBuild(defaultVars)
     getSplunkbaseToken(defaultVars)
@@ -154,6 +157,20 @@ def getDefaultVars():
     getDSP(defaultVars)
     getIPv6(defaultVars)
     return defaultVars
+
+def getServiceName(vars_scope):
+    """
+    Use k8s related env vars to construct a custom serverName value
+    """
+    podName = os.environ.get("POD_NAME", socket.getfqdn())
+    clusterDomain = os.environ.get("CLUSTER_DOMAIN", "cluster.local")
+    serviceName = os.environ.get("SPLUNK_SERVICE_NAME", "")
+    headlessServiceName = os.environ.get("SPLUNK_HEADLESS_SERVICE_NAME", "")
+    namespace = os.environ.get("POD_NAMESPACE", "")
+    if serviceName != "" and namespace != "":
+        vars_scope["splunk"]["issuer_uri"] = "{}.{}.svc.{}".format(serviceName, namespace, clusterDomain)
+    if headlessServiceName != "" and namespace != "":
+        vars_scope["splunk"]["server_name"] = "{}.{}.{}.svc.{}".format(podName, headlessServiceName, namespace, clusterDomain)
 
 def getSplunkPaths(vars_scope):
     """
