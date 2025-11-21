@@ -15,12 +15,7 @@
     method: POST
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
-<<<<<<< HEAD
-    svc_port: "{{ splunk.svc_port }}"
-    splunk_home: "{{ splunk.home }}"
-=======
     force_basic_auth: yes
->>>>>>> develop
     body: "{{ item }}"
     validate_certs: false
     status_code: 201,409
@@ -41,12 +36,7 @@
     method: POST
     user: "{{ splunk.admin_user }}"
     password: "{{ splunk.password }}"
-<<<<<<< HEAD
-    svc_port: "{{ splunk.svc_port }}"
-    splunk_home: "{{ splunk.home }}"
-=======
     force_basic_auth: yes
->>>>>>> develop
     body: "{{ item }}"
     validate_certs: false
     status_code: 201,409
