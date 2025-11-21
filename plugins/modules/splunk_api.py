@@ -5,13 +5,17 @@ import os
 import requests
 import requests_unixsocket
 import json
-#import urllib.parse
+from urllib.parse import urlparse
 
 UDS_SOCKET_PATH = "/opt/splunkforwarder/var/run/splunk/cli.socket"
 UDS_SOCKET_PATH_URL = "%2Fopt%2Fsplunkforwarder%2Fvar%2Frun%2Fsplunk%2Fcli.socket"
 
+
 def supports_uds(uds_socket_path):
-    return os.path.exists(uds_socket_path)
+    if os.path.exists(uds_socket_path) and os.access(uds_socket_path, os.W_OK):
+        return True
+    else:
+        return False
 
 def api_call_tcp(cert_prefix, method, endpoint, username, password, svc_port, payload=None, headers=None, verify=False, status_code=None, timeout=None, body_format=None):
     if not cert_prefix or cert_prefix not in ['http', 'https']:
@@ -49,7 +53,7 @@ def api_call_tcp(cert_prefix, method, endpoint, username, password, svc_port, pa
     return response, excep_str
 
 def api_call_uds(method, endpoint, username, password, svc_port, uds_socket_path, payload=None, headers=None, verify=False, status_code=None, timeout=None, body_format=None):
-    url = "http+unix://{}{}".format(urllib.parse.quote_plus(uds_socket_path),endpoint)
+    url = "http+unix://{}{}".format(urlparse(uds_socket_path),endpoint)
     #url = "http+unix://{}{}".format(UDS_SOCKET_PATH_URL,endpoint)
     if headers is None:
         headers = {}
